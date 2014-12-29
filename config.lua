@@ -216,203 +216,7 @@ if game.entityprototypes["RW-limestone"] then
   config["copper-ore"].multi_resource["RW-limestone"] = 3
   config["coal"].multi_resource["RW-limestone"] = 3
 end
--- BobOres
--- up the stone at start
-if remote.interfaces["bobores"] then
-  config["stone"].allotment = 100
-  config["stone"].starting.richness = 10000
-end
 
--- bobores
-if remote.interfaces["bobores"] then
-
-  config["gold-ore"] = {
-    type="resource-ore",
-
-    allotment=80,
-    spawns_per_region={min=2, max=5},
-    richness=6000,
-    size={min=10, max=19},
-    min_amount = 15,
-
-    starting={richness=500, size=3, probability=0.1},
-    
-    multi_resource_chance=0.60,
-    multi_resource={
-      ["lead-ore"] = 3,
-      ["silver-ore"] = 3,
-      ["tin-ore"] = 3,
-      ["tungsten-ore"] = 3,
-      ["zinc-ore"] = 3,
-    }
-  } 
-  config["silver-ore"] = {
-    type="resource-ore",
-
-    allotment=60,
-    spawns_per_region={min=2, max=5},
-    richness=4000,
-    size={min=8, max=10},
-    min_amount = 15,
-
-    starting={richness=500, size=3, probability=0.5},
-    
-    multi_resource_chance=0.60,
-    multi_resource={
-      ["lead-ore"] = 3,
-      ["gold-ore"] = 3,
-      ["tin-ore"] = 3,
-      ["tungsten-ore"] = 3,
-      ["zinc-ore"] = 3,
-    }
-  }
-  
-  config["lead-ore"] = {
-    type="resource-ore",
-
-    allotment=80,
-    spawns_per_region={min=2, max=5},
-    richness=5000,
-    size={min=6, max=15},
-    min_amount = 15,
-
-    starting={richness=500, size=6, probability=1},
-    
-    multi_resource_chance=0.60,
-    multi_resource={
-      ["silver-ore"] = 3,
-      ["gold-ore"] = 3,
-      ["tin-ore"] = 3,
-      ["tungsten-ore"] = 3,
-      ["zinc-ore"] = 3,
-    }
-  }
-  
-  config["tin-ore"] = {
-    type="resource-ore",
-
-    allotment=90,
-    spawns_per_region={min=2, max=5},
-    richness=5000,
-    size={min=18, max=27},
-    min_amount = 15,
-
-    starting={richness=1000, size=6, probability=1},
-    
-    multi_resource_chance=0.60,
-    multi_resource={
-      ["lead-ore"] = 3,
-      ["silver-ore"] = 3,
-      ["gold-ore"] = 3,
-      ["tungsten-ore"] = 3,
-      ["zinc-ore"] = 3,
-      ["copper-ore"] = 2,
-    }
-  }
-  
-  config["tungsten-ore"] = {
-    type="resource-ore",
-
-    allotment=40,
-    spawns_per_region={min=2, max=5},
-    richness=2000,
-    size={min=6, max=9},
-    min_amount = 15,
-
-    starting={richness=50, size=3, probability=0},
-    
-    multi_resource_chance=0.60,
-    multi_resource={
-      ["lead-ore"] = 3,
-      ["silver-ore"] = 3,
-      ["gold-ore"] = 3,
-      ["tin-ore"] = 3,
-      ["zinc-ore"] = 3
-    }
-  }
-  config["bauxite-ore"] = {
-    type="resource-ore",
-
-    allotment=90,
-    spawns_per_region={min=2, max=5},
-    richness=4000,
-    size={min=9, max=15},
-    min_amount = 15,
-
-    starting={richness=50, size=3, probability=0},
-    
-    multi_resource_chance=0.0,
-    multi_resource={
-      ["lead-ore"] = 3,
-      ["silver-ore"] = 3,
-      ["gold-ore"] = 3,
-      ["tin-ore"] = 3,
-      ["zinc-ore"] = 3,
-    }
-  }
-  config["rutile-ore"] = {
-    type="resource-ore",
-
-    allotment=40,
-    spawns_per_region={min=2, max=5},
-    richness=2000,
-    size={min=6, max=9},
-    min_amount = 15,
-
-    starting={richness=50, size=3, probability=0},
-    
-    multi_resource_chance=0.0,
-    multi_resource={
-      ["lead-ore"] = 3,
-      ["silver-ore"] = 3,
-      ["gold-ore"] = 3,
-      ["tin-ore"] = 3,
-      ["zinc-ore"] = 3,
-    }
-  }
-  
-  config["quartz"] = {
-    type="resource-ore",
-
-    allotment=90,
-    spawns_per_region={min=2, max=5},
-    richness=5000,
-    size={min=5, max=12},
-    min_amount = 15,
-
-    starting={richness=500, size=4, probability=0.5},
-    
-    multi_resource_chance=0.0,
-    multi_resource={
-      ["lead-ore"] = 3,
-      ["silver-ore"] = 3,
-      ["gold-ore"] = 3,
-      ["tin-ore"] = 3,
-      ["zinc-ore"] = 3,
-    }
-  }
-  
-  config["zinc-ore"] = {
-    type="resource-ore",
-
-    allotment=60,
-    spawns_per_region={min=2, max=5},
-    richness=3000,
-    size={min=6, max=15},
-    min_amount = 15,
-
-    starting={richness=50, size=3, probability=0},
-    
-    multi_resource_chance=0.60,
-    multi_resource={
-      ["lead-ore"] = 3,
-      ["silver-ore"] = 3,
-      ["gold-ore"] = 3,
-      ["tin-ore"] = 3,
-      ["tungsten-ore"] = 3,
-    }
-  }
-end
 -- DyTech
 
 if remote.interfaces["DyTech-Core"] then
@@ -644,6 +448,203 @@ if remote.interfaces["DyTech-Warfare"] then
   
 end
 
+-- BobOres
+-- up the stone at start
+if remote.interfaces["bobores"] then
+  config["stone"].allotment = 100
+  config["stone"].starting.richness = 10000
+end
+
+-- bobores
+if remote.interfaces["bobores"] then
+
+  config["gold-ore"] = {
+    type="resource-ore",
+
+    allotment=80,
+    spawns_per_region={min=2, max=5},
+    richness=6000,
+    size={min=10, max=19},
+    min_amount = 15,
+
+    starting={richness=500, size=3, probability=0.1},
+    
+    multi_resource_chance=0.60,
+    multi_resource={
+      ["lead-ore"] = 3,
+      ["silver-ore"] = 3,
+      ["tin-ore"] = 3,
+      ["tungsten-ore"] = 3,
+      ["zinc-ore"] = 3,
+    }
+  } 
+  config["silver-ore"] = {
+    type="resource-ore",
+
+    allotment=60,
+    spawns_per_region={min=2, max=5},
+    richness=4000,
+    size={min=8, max=10},
+    min_amount = 15,
+
+    starting={richness=500, size=3, probability=0.5},
+    
+    multi_resource_chance=0.60,
+    multi_resource={
+      ["lead-ore"] = 3,
+      ["gold-ore"] = 3,
+      ["tin-ore"] = 3,
+      ["tungsten-ore"] = 3,
+      ["zinc-ore"] = 3,
+    }
+  }
+  
+  config["lead-ore"] = {
+    type="resource-ore",
+
+    allotment=80,
+    spawns_per_region={min=2, max=5},
+    richness=5000,
+    size={min=6, max=15},
+    min_amount = 15,
+
+    starting={richness=500, size=6, probability=1},
+    
+    multi_resource_chance=0.60,
+    multi_resource={
+      ["silver-ore"] = 3,
+      ["gold-ore"] = 3,
+      ["tin-ore"] = 3,
+      ["tungsten-ore"] = 3,
+      ["zinc-ore"] = 3,
+    }
+  }
+  
+  config["tin-ore"] = {
+    type="resource-ore",
+
+    allotment=90,
+    spawns_per_region={min=2, max=5},
+    richness=5000,
+    size={min=18, max=27},
+    min_amount = 15,
+
+    starting={richness=1000, size=6, probability=1},
+    
+    multi_resource_chance=0.60,
+    multi_resource={
+      ["lead-ore"] = 3,
+      ["silver-ore"] = 3,
+      ["gold-ore"] = 3,
+      ["tungsten-ore"] = 3,
+      ["zinc-ore"] = 3,
+      ["copper-ore"] = 2,
+    }
+  }
+  
+  config["tungsten-ore"] = {
+    type="resource-ore",
+
+    allotment=40,
+    spawns_per_region={min=2, max=5},
+    richness=2000,
+    size={min=6, max=9},
+    min_amount = 15,
+
+    starting={richness=50, size=3, probability=0},
+    
+    multi_resource_chance=0.60,
+    multi_resource={
+      ["lead-ore"] = 3,
+      ["silver-ore"] = 3,
+      ["gold-ore"] = 3,
+      ["tin-ore"] = 3,
+      ["zinc-ore"] = 3
+    }
+  }
+  config["bauxite-ore"] = {
+    type="resource-ore",
+
+    allotment=90,
+    spawns_per_region={min=2, max=5},
+    richness=4000,
+    size={min=9, max=15},
+    min_amount = 15,
+
+    starting={richness=50, size=3, probability=0},
+    
+    multi_resource_chance=0.0,
+    multi_resource={
+      ["lead-ore"] = 3,
+      ["silver-ore"] = 3,
+      ["gold-ore"] = 3,
+      ["tin-ore"] = 3,
+      ["zinc-ore"] = 3,
+    }
+  }
+  config["rutile-ore"] = {
+    type="resource-ore",
+
+    allotment=40,
+    spawns_per_region={min=2, max=5},
+    richness=2000,
+    size={min=6, max=9},
+    min_amount = 15,
+
+    starting={richness=50, size=3, probability=0},
+    
+    multi_resource_chance=0.0,
+    multi_resource={
+      ["lead-ore"] = 3,
+      ["silver-ore"] = 3,
+      ["gold-ore"] = 3,
+      ["tin-ore"] = 3,
+      ["zinc-ore"] = 3,
+    }
+  }
+  
+  config["quartz"] = {
+    type="resource-ore",
+
+    allotment=90,
+    spawns_per_region={min=2, max=5},
+    richness=5000,
+    size={min=5, max=12},
+    min_amount = 15,
+
+    starting={richness=500, size=4, probability=0.5},
+    
+    multi_resource_chance=0.0,
+    multi_resource={
+      ["lead-ore"] = 3,
+      ["silver-ore"] = 3,
+      ["gold-ore"] = 3,
+      ["tin-ore"] = 3,
+      ["zinc-ore"] = 3,
+    }
+  }
+  
+  config["zinc-ore"] = {
+    type="resource-ore",
+
+    allotment=60,
+    spawns_per_region={min=2, max=5},
+    richness=3000,
+    size={min=6, max=15},
+    min_amount = 15,
+
+    starting={richness=50, size=3, probability=0},
+    
+    multi_resource_chance=0.60,
+    multi_resource={
+      ["lead-ore"] = 3,
+      ["silver-ore"] = 3,
+      ["gold-ore"] = 3,
+      ["tin-ore"] = 3,
+      ["tungsten-ore"] = 3,
+    }
+  }
+end
 
 --[[ commented due to absence in current version of F-Mod
 if remote.interfaces["F-Mod"] then

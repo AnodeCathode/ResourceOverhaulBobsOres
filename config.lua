@@ -6,16 +6,16 @@ region_size=8 -- alternative mean to control how further away resources would be
               -- each region is region_size*region_size chunks
               -- each chunk is 32*32 tiles
 
-override_normal_spawn = true   -- if false then the standard spawner can also spawn full grown resources/entities, 
+override_normal_spawn = false   -- if false then the standard spawner can also spawn full grown resources/entities, 
                                -- set resources you want to control through this config to "None" in worldgen "Size" settings when starting a new game
                                -- changing of this setting requires game restart, i.e. close game and start it again, not actally a new game
                                
-override_type = 'partially'    -- 'full' - no spawns by game are allowed, 'partially' - very small patches are spawned by world gen
+override_type = 'full'   	   -- 'full' - no spawns by game are allowed, 'partially' - very small patches are spawned by world gen
                                -- changing of this setting requires game restart
 
 starting_area_size=1           -- starting area in regions, safe from random nonsense
 
-absolute_resource_chance=0.30  -- chance to spawn an resource in a region
+absolute_resource_chance=0.40  -- chance to spawn an resource in a region
 global_richness_mult = 1.0      -- multiply richness all resources
 
 multi_resource_richness_factor=0.60 -- any additional resource is multiplied by this value times resources-1
@@ -27,6 +27,11 @@ min_amount=350 -- default value for minimum amount of resource in single pile
 richness_distance_factor=1.030 -- 3.0 relative % per region distance ~ 2.1x mult @ 25 regions distance
 
 deterministic = true           -- set to false to use system for all decisions  math.random
+
+endless_resource_mode = false   -- if true, the size of each resource is modified by the following modifier. Use with the endless resources mod.
+endless_resource_mode_sizeModifier = 0.30
+
+disable_RSO_biter_spawning = false		-- if true, no biters will be spawned by RSO. Do not use with override_normal_spawn = true, because then no biters will be spawned at all.
 
 config={
   ["iron-ore"] = {
@@ -40,7 +45,9 @@ config={
     size={min=20, max=40}, -- rough radius of area, too high value can produce square shaped areas
     
     -- resource provided at starting location
-    starting={richness=2000, size=17},
+    -- probability: 1 = 100% chance to be in starting area
+    --				0 = resource is not in starting area
+    starting={richness=2000, size=17, probability=1},
     
     multi_resource_chance=0.13, -- absolute value
     multi_resource={
@@ -59,7 +66,7 @@ config={
     richness=11000,
     size={min=15, max=30},
 
-    starting={richness=1800, size=10},
+    starting={richness=1800, size=10, probability=1},
     
     multi_resource_chance=0.13,
     multi_resource={
@@ -79,7 +86,7 @@ config={
     size={min=15, max=25},
     richness=14000,
 
-    starting={richness=2500, size=12},
+    starting={richness=2500, size=12, probability=1},
     
     multi_resource_chance=0.13,
     multi_resource={
@@ -98,7 +105,7 @@ config={
     richness=9000,
     size={min=15, max=25},
 
-    starting={richness=1000, size=8},
+    starting={richness=1000, size=8, probability=1},
     
     multi_resource_chance=0.13,
     multi_resource={
@@ -119,7 +126,7 @@ config={
     richness={min=20000, max=60000}, -- total richness of site 
     size={min=2, max=4}, -- richness devided by this number
     
-    starting={richness=4000, size=1}
+    starting={richness=4000, size=1, probability=0.5}
   },
   
   ["biter-spawner"] = {
@@ -147,22 +154,41 @@ config={
         min_distance=2,
         allotment=2000,
         allotment_distance_factor=0.9,
+        clear_range = {1, 1},
       },
       ["medium-worm-turret"]={
         min_distance=5,
         allotment=1000,
         allotment_distance_factor=1.05,
+        clear_range = {1, 1},
       },
       ["big-worm-turret"]={
         min_distance=7,
         allotment=1000,
         allotment_distance_factor=1.15,
+        clear_range = {1, 1},
+      },
+      ["spitter-spawner"]={
+      	min_distance=4,
+      	allotment=1000,
+      	allotment_distance_factor=1.10,
+      	clear_range = {3, 3},
       }
     }
   }
 }
 
 --[[ MODS SUPPORT ]]--
+-- Endless resources mod
+-- reduce the starting area size of resources (Note: only done for vanilla resources)
+-- The size will additionally be modified with endless_resource_mode_sizeModifier
+if endless_resource_mode then
+	config["iron-ore"].starting = {richness=2000, size=22, probability=1}
+	config["copper-ore"].starting = {richness=1800, size=20, probability=1}
+	config["coal"].starting = {richness=2500, size=15, probability=1}
+	config["stone"].starting = {richness=1000, size=10, probability=1}
+end
+
 
 -- Roadworks mod
 if remote and game then
@@ -175,7 +201,7 @@ if game.entityprototypes["RW-limestone"] then
     richness=11000,
     size={min=10, max=17},
 
-    starting={richness=1000, size=4},
+    starting={richness=1000, size=4, probability=0.9},
     
     multi_resource_chance=0.15,
     multi_resource={
@@ -210,7 +236,7 @@ if remote.interfaces["DyTech-Metallurgy"] then
     size={min=2, max=5},
     min_amount = 15,
 
-    starting={richness=50, size=3},
+    starting={richness=50, size=3, probability=0},
     
     multi_resource_chance=0.60,
     multi_resource={
@@ -230,7 +256,7 @@ if remote.interfaces["DyTech-Metallurgy"] then
     size={min=2, max=5},
     min_amount = 15,
 
-    starting={richness=50, size=3},
+    starting={richness=50, size=3, probability=0},
     
     multi_resource_chance=0.60,
     multi_resource={
@@ -251,7 +277,7 @@ if remote.interfaces["DyTech-Metallurgy"] then
     size={min=2, max=5},
     min_amount = 15,
 
-    starting={richness=50, size=3},
+    starting={richness=50, size=3, probability=0.2},
     
     multi_resource_chance=0.60,
     multi_resource={
@@ -272,7 +298,7 @@ if remote.interfaces["DyTech-Metallurgy"] then
     size={min=2, max=5},
     min_amount = 15,
 
-    starting={richness=50, size=3},
+    starting={richness=50, size=3, probability=0},
     
     multi_resource_chance=0.60,
     multi_resource={
@@ -294,7 +320,7 @@ if remote.interfaces["DyTech-Metallurgy"] then
     size={min=2, max=5},
     min_amount = 15,
 
-    starting={richness=50, size=3},
+    starting={richness=50, size=3, probability=0},
     
     multi_resource_chance=0.60,
     multi_resource={
@@ -315,7 +341,7 @@ if remote.interfaces["DyTech-Metallurgy"] then
     size={min=2, max=5},
     min_amount = 15,
 
-    starting={richness=50, size=3},
+    starting={richness=50, size=3, probability=0},
     
     multi_resource_chance=0.60,
     multi_resource={
@@ -375,7 +401,7 @@ if remote.interfaces["DyTech-Metallurgy"] then
     
     absolute_probability=0.01,
     
-    starting={richness=10500, size=3},
+    starting={richness=10500, size=3, probability=0.4},
     multi_resource_chance=0.25,
     multi_resource={
       ["lava-2800"] = 1,
@@ -395,7 +421,7 @@ if remote.interfaces["DyTech-Warfare"] then
     richness=125,
     size={min=2, max=5},
     min_amount = 15,
-    starting={richness=40, size=3},
+    starting={richness=40, size=3, probability=0},
     
     multi_resource_chance=0.20,
     multi_resource={
@@ -419,6 +445,207 @@ if remote.interfaces["DyTech-Warfare"] then
     config["tungsten-ore"].multi_resource["gems"] = 2
     config["zinc-ore"].multi_resource["gems"] = 2
   end
+  
+end
+
+
+-- BobOres
+-- up the stone at start
+if remote.interfaces["bobores"] then
+  config["stone"].allotment = 100
+  config["stone"].richness = 25000
+  config["stone"].starting.richness = 10000
+end
+
+if remote.interfaces["bobores"] then
+-- bobores
+  config["gold-ore"] = {
+    type="resource-ore",
+
+    allotment=25,
+    spawns_per_region={min=2, max=5},
+    richness=175,
+    size={min=2, max=5},
+    min_amount = 15,
+
+    starting={richness=50, size=3, probability=0},
+    
+    multi_resource_chance=0.60,
+    multi_resource={
+      ["lead-ore"] = 3,
+      ["silver-ore"] = 3,
+      ["tin-ore"] = 3,
+      ["tungsten-ore"] = 3,
+      ["zinc-ore"] = 3,
+    }
+  } 
+  config["silver-ore"] = {
+    type="resource-ore",
+
+    allotment=25,
+    spawns_per_region={min=2, max=5},
+    richness=220,
+    size={min=2, max=5},
+    min_amount = 15,
+
+    starting={richness=50, size=3, probability=0},
+    
+    multi_resource_chance=0.60,
+    multi_resource={
+      ["lead-ore"] = 3,
+      ["gold-ore"] = 3,
+      ["tin-ore"] = 3,
+      ["tungsten-ore"] = 3,
+      ["zinc-ore"] = 3,
+    }
+  }
+  
+  config["lead-ore"] = {
+    type="resource-ore",
+
+    allotment=25,
+    spawns_per_region={min=2, max=5},
+    richness=220,
+    size={min=2, max=5},
+    min_amount = 15,
+
+    starting={richness=50, size=3, probability=0.2},
+    
+    multi_resource_chance=0.60,
+    multi_resource={
+      ["silver-ore"] = 3,
+      ["gold-ore"] = 3,
+      ["tin-ore"] = 3,
+      ["tungsten-ore"] = 3,
+      ["zinc-ore"] = 3,
+    }
+  }
+  
+  config["tin-ore"] = {
+    type="resource-ore",
+
+    allotment=25,
+    spawns_per_region={min=2, max=5},
+    richness=220,
+    size={min=2, max=5},
+    min_amount = 15,
+
+    starting={richness=50, size=3, probability=0},
+    
+    multi_resource_chance=0.60,
+    multi_resource={
+      ["lead-ore"] = 3,
+      ["silver-ore"] = 3,
+      ["gold-ore"] = 3,
+      ["tungsten-ore"] = 3,
+      ["zinc-ore"] = 3,
+      ["copper-ore"] = 2,
+    }
+  }
+  
+  config["tungsten-ore"] = {
+    type="resource-ore",
+
+    allotment=25,
+    spawns_per_region={min=2, max=5},
+    richness=220,
+    size={min=2, max=5},
+    min_amount = 15,
+
+    starting={richness=50, size=3, probability=0},
+    
+    multi_resource_chance=0.60,
+    multi_resource={
+      ["lead-ore"] = 3,
+      ["silver-ore"] = 3,
+      ["gold-ore"] = 3,
+      ["tin-ore"] = 3,
+      ["zinc-ore"] = 3
+    }
+  }
+  config["bauxite-ore"] = {
+    type="resource-ore",
+
+    allotment=25,
+    spawns_per_region={min=2, max=5},
+    richness=220,
+    size={min=2, max=5},
+    min_amount = 15,
+
+    starting={richness=50, size=3, probability=0},
+    
+    multi_resource_chance=0.0,
+    multi_resource={
+      ["lead-ore"] = 3,
+      ["silver-ore"] = 3,
+      ["gold-ore"] = 3,
+      ["tin-ore"] = 3,
+      ["zinc-ore"] = 3,
+    }
+  }
+  config["rutile-ore"] = {
+    type="resource-ore",
+
+    allotment=25,
+    spawns_per_region={min=2, max=5},
+    richness=220,
+    size={min=2, max=5},
+    min_amount = 15,
+
+    starting={richness=50, size=3, probability=0},
+    
+    multi_resource_chance=0.0,
+    multi_resource={
+      ["lead-ore"] = 3,
+      ["silver-ore"] = 3,
+      ["gold-ore"] = 3,
+      ["tin-ore"] = 3,
+      ["zinc-ore"] = 3,
+    }
+  }
+  
+  config["quartz"] = {
+    type="resource-ore",
+
+    allotment=25,
+    spawns_per_region={min=2, max=5},
+    richness=220,
+    size={min=2, max=5},
+    min_amount = 15,
+
+    starting={richness=50, size=3, probability=0},
+    
+    multi_resource_chance=0.0,
+    multi_resource={
+      ["lead-ore"] = 3,
+      ["silver-ore"] = 3,
+      ["gold-ore"] = 3,
+      ["tin-ore"] = 3,
+      ["zinc-ore"] = 3,
+    }
+  }
+  
+  config["zinc-ore"] = {
+    type="resource-ore",
+
+    allotment=25,
+    spawns_per_region={min=2, max=5},
+    richness=220,
+    size={min=2, max=5},
+    min_amount = 15,
+
+    starting={richness=50, size=3, probability=0},
+    
+    multi_resource_chance=0.60,
+    multi_resource={
+      ["lead-ore"] = 3,
+      ["silver-ore"] = 3,
+      ["gold-ore"] = 3,
+      ["tin-ore"] = 3,
+      ["tungsten-ore"] = 3,
+    }
+  }
+ 
   
 end
 

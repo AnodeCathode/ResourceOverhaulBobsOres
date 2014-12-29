@@ -34,8 +34,9 @@ else
 
 end
 
--- disiable spawners regardless
+-- disable spawners regardless
 add_peak(data.raw["unit-spawner"]["biter-spawner"],{influence=-1000})
+add_peak(data.raw["unit-spawner"]["spitter-spawner"],{influence=-1000})
 add_peak(data.raw["turret"]["small-worm-turret"],{influence=-1000})
 add_peak(data.raw["turret"]["medium-worm-turret"],{influence=-1000})
 add_peak(data.raw["turret"]["big-worm-turret"],{influence=-1000})

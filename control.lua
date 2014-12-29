@@ -213,6 +213,19 @@ local function find_random_neighbour_chunk(ocx, ocy)
   return ocx, ocy
 end
 
+-- modifies the resource size - only used in endless_resource_mode
+local function modify_resource_size(resourceSize)
+	if not endless_resource_mode then return resourceSize end
+	
+	newResourceSize = resourceSize * endless_resource_mode_sizeModifier
+
+	-- make sure it's still an integer
+	newResourceSize = math.ceil(newResourceSize)
+	-- make sure it's not 0
+	if newResourceSize == 0 then newResourceSize = 1 end
+	return newResourceSize
+end
+
 --[[ SPAWN METHODS ]]--
 
 --[[ entity-field ]]--
@@ -220,6 +233,7 @@ local function spawn_resource_ore(rname, pos, size, richness, restrictions)
   -- blob generator, centered at pos, size controls blob diameter
   restrictions = restrictions or ''
   debug("Entering spawn_resource_ore "..rname.." "..pos.x..","..pos.y.." "..size.." "..richness.." "..restrictions)
+  size = modify_resource_size(size)
   size = size/2 -- to radius
   local p_balls={}
   local n_balls={}
@@ -360,6 +374,7 @@ local function spawn_resource_liquid(rname, pos, size, richness, restrictions)
     size = floor(size*1.2)
   end
   ]]--
+  size = modify_resource_size(size)
 
   local total_share = 0
   local avg_share = 1/size
@@ -413,6 +428,7 @@ local function spawn_resource_liquid(rname, pos, size, richness, restrictions)
 end
 
 local function spawn_entity(ent, r_config, x, y)
+  if disable_RSO_biter_spawning then return end
   local size=rgen:random(r_config.size.min, r_config.size.max)
 
   local _total = 0
@@ -430,6 +446,7 @@ local function spawn_entity(ent, r_config, x, y)
               
     remove_trees(s_x, s_y, r_config.clear_range[1], r_config.clear_range[2])
     f=game.forces.enemy
+    
     if game.gettile(s_x, s_y).valid and game.canplaceentity{name=ent, position={s_x, s_y}} then
       _total = _total + richness
       debug("@ "..s_x..","..s_y)
@@ -458,7 +475,7 @@ local function spawn_entity(ent, r_config, x, y)
             if v.allotment_range and sub_type >= v.allotment_range.min and sub_type <= v.allotment_range.max then
               s_x = x + rgen:random(max_d) - max_d/2
               s_y = y + rgen:random(max_d) - max_d/2
-              remove_trees(s_x, s_y, 1, 1)
+              remove_trees(s_x, s_y, v.clear_range[1], v.clear_range[2])
               if game.gettile(s_x, s_y).valid and game.canplaceentity{name=sub_spawn, position={s_x, s_y}} then
                 game.createentity{name=sub_spawn, position={s_x, s_y}, force=game.forces[r_config.force], direction=rgen:random(4)}
                 debug("Rolled subspawn "..sub_spawn.." @ "..s_x..","..s_x)
@@ -482,27 +499,31 @@ local function spawn_starting_resources()
   local status = true
   for index,v in pairs(config) do
     if v.starting then 
-      local total = 0
-      local radius = 10
-      local min_threshold = 0
-      if v.type == "resource-ore" then
-        min_threshold = v.starting.richness * v.starting.size
-      elseif v.type == "resource-liquid" then
-        min_threshold = v.starting.richness*0.5
-      end
-      while (radius<100) and (total < min_threshold) do
-        local angle=rgen:random()*pi*2
-        local dist=rgen:random()*30+radius*2
-        local pos = {x=floor(cos(angle)*dist), y=floor(sin(angle)*dist)}
-        if v.type == "resource-ore" then
-          total = total + spawn_resource_ore(v.name, pos, v.starting.size, v.starting.richness)
-        elseif v.type == "resource-liquid" then
-          total = total + spawn_resource_liquid(v.name, pos, v.starting.size, v.starting.richness)
-        end
-        radius=radius+5
-      end
-      if total < min_threshold then
-        status = false
+      local prob = rgen:random() -- probability that this resource is spawned
+      debug("starting resource probability rolled "..prob)
+      if v.starting.probability > 0 and prob <= v.starting.probability then
+	      local total = 0
+	      local radius = 10
+	      local min_threshold = 0
+	      if v.type == "resource-ore" then
+	        min_threshold = v.starting.richness * modify_resource_size(v.starting.size)
+	      elseif v.type == "resource-liquid" then
+	        min_threshold = v.starting.richness*0.5
+	      end
+	      while (radius<100) and (total < min_threshold) do
+	        local angle=rgen:random()*pi*2
+	        local dist=rgen:random()*30+radius*2
+	        local pos = {x=floor(cos(angle)*dist), y=floor(sin(angle)*dist)}
+	        if v.type == "resource-ore" then
+	          total = total + spawn_resource_ore(v.name, pos, v.starting.size, v.starting.richness)
+	        elseif v.type == "resource-liquid" then
+	          total = total + spawn_resource_liquid(v.name, pos, v.starting.size, v.starting.richness)
+	        end
+	        radius=radius+5
+	      end
+	      if total < min_threshold then
+	        status = false
+	      end
       end
     end
   end
@@ -563,12 +584,13 @@ local function init()
   prebuild_config_data()
   generate_seed()
   spawn_starting_resources()
+  
   if debug_enabled and not glob.debug_once then
-    game.player.insert{name = "coal", count = 1000}
-    game.player.insert{name = "car", count = 1}
-    game.player.insert{name = "car", count = 1}
-    game.player.insert{name = "car", count = 1}
-    --game.player.insert{name = "resource-monitor", count = 1}
+    --game.player.character.insert{name = "coal", count = 1000}
+    --game.player.character.insert{name = "car", count = 1}
+    --game.player.character.insert{name = "car", count = 1}
+    --game.player.character.insert{name = "car", count = 1}
+    --game.player.character.insert{name = "resource-monitor", count = 1}
     glob.debug_once = true
   end
 end

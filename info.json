@@ -1,10 +1,10 @@
 {
   "name": "rso-mod",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "title": "Resource Spawner Overhaul",
   "author": "Dark",
   "homepage": "http://www.factorioforums.com/forum/viewtopic.php?f=14&t=4761",
   "contact": "Message me @ http://www.factorioforums.com/forum/viewtopic.php?f=14&t=4761",
   "description": "Overhauls resource spawning system.",
-  "dependencies": ["base >= 0.11.1", "? roadworks", "? DyTech-Core", "? DyTech-Warfare", "? DyTech-Metallurgy" ]
+  "dependencies": ["base >= 0.11.1", "? roadworks", "? DyTech-Core", "? DyTech-Warfare", "? DyTech-Metallurgy", "? bobores"]
 }

@@ -10,7 +10,7 @@ override_normal_spawn = false   -- if false then the standard spawner can also s
                                -- set resources you want to control through this config to "None" in worldgen "Size" settings when starting a new game
                                -- changing of this setting requires game restart, i.e. close game and start it again, not actally a new game
                                
-override_type = 'full'   	   -- 'full' - no spawns by game are allowed, 'partially' - very small patches are spawned by world gen
+override_type = 'partially'   	   -- 'full' - no spawns by game are allowed, 'partially' - very small patches are spawned by world gen
                                -- changing of this setting requires game restart
 
 starting_area_size=1           -- starting area in regions, safe from random nonsense
@@ -612,7 +612,7 @@ if remote.interfaces["bobores"] then
     size={min=5, max=12},
     min_amount = 15,
 
-    starting={richness=500, size=4, probability=0.5},
+    starting={richness=500, size=4, probability=0.0},
     
     multi_resource_chance=0.0,
     multi_resource={

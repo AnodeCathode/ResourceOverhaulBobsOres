@@ -6,16 +6,16 @@ region_size=8 -- alternative mean to control how further away resources would be
               -- each region is region_size*region_size chunks
               -- each chunk is 32*32 tiles
 
-override_normal_spawn = false   -- if false then the standard spawner can also spawn full grown resources/entities, 
+override_normal_spawn = true   -- if false then the standard spawner can also spawn full grown resources/entities, 
                                -- set resources you want to control through this config to "None" in worldgen "Size" settings when starting a new game
                                -- changing of this setting requires game restart, i.e. close game and start it again, not actally a new game
                                
-override_type = 'partially'   	   -- 'full' - no spawns by game are allowed, 'partially' - very small patches are spawned by world gen
+override_type = 'full'   	   -- 'full' - no spawns by game are allowed, 'partially' - very small patches are spawned by world gen
                                -- changing of this setting requires game restart
 
 starting_area_size=1           -- starting area in regions, safe from random nonsense
 
-absolute_resource_chance=0.60  -- chance to spawn an resource in a region
+absolute_resource_chance=0.40  -- chance to spawn an resource in a region
 global_richness_mult = 1.0      -- multiply richness all resources
 
 multi_resource_richness_factor=0.60 -- any additional resource is multiplied by this value times resources-1
@@ -32,6 +32,9 @@ endless_resource_mode = false   -- if true, the size of each resource is modifie
 endless_resource_mode_sizeModifier = 0.30
 
 disable_RSO_biter_spawning = false		-- if true, no biters will be spawned by RSO. Do not use with override_normal_spawn = true, because then no biters will be spawned at all.
+
+biter_ratio_segment=1      --the ratio components determining how many biters to spitters will be spawned
+spitter_ratio_segment=1    --eg. 1 and 1 -> equal number of biters and spitters,  10 and 1 -> 10 times as many biters to spitters
 
 config={
   ["iron-ore"] = {
@@ -167,12 +170,6 @@ config={
         allotment=1000,
         allotment_distance_factor=1.15,
         clear_range = {1, 1},
-      },
-      ["spitter-spawner"]={
-      	min_distance=4,
-      	allotment=1000,
-      	allotment_distance_factor=1.10,
-      	clear_range = {3, 3},
       }
     }
   }

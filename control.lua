@@ -39,6 +39,7 @@ local assoc_config = {}
 local max_allotment = 0
 local rgen = nil
 local distance = util.distance
+local spawner_probability_edge = 0  -- below this value a biter spawner, above/equal this value a spitter spawner
 
 
 --[[ HELPER METHODS ]]--
@@ -450,7 +451,13 @@ local function spawn_entity(ent, r_config, x, y)
     if game.gettile(s_x, s_y).valid and game.canplaceentity{name=ent, position={s_x, s_y}} then
       _total = _total + richness
       debug("@ "..s_x..","..s_y)
-      game.createentity{name=ent, position={s_x, s_y}, force=game.forces[r_config.force], amount=richness, direction=rgen:random(4)}
+	  if spawner_probability_edge > 0 then
+        if rgen:random() < spawner_probability_edge then
+	      game.createentity{name="biter-spawner", position={s_x, s_y}, force=game.forces[r_config.force], amount=richness, direction=rgen:random(4)}
+        else
+          game.createentity{name="spitter-spawner", position={s_x, s_y}, force=game.forces[r_config.force], amount=richness, direction=rgen:random(4)}
+        end
+      end
     end
     if r_config.sub_spawn_probability then
       local sub_spawn_prob = r_config.sub_spawn_probability*math.min(r_config.sub_spawn_max_distance_factor, r_config.sub_spawn_distance_factor^r_distance)
@@ -579,10 +586,18 @@ local function generate_seed()
   --game.player.print("Initial seed: "..glob.seed)
 end
 
+-- set up the probabilty segments from which to roll between for biter and spitter spawners
+local function calculate_spawner_ratio()
+  if (biter_ratio_segment ~= 0 and spitter_ratio_segment ~= 0) and biter_ratio_segment >= 0 and spitter_ratio_segment >= 0 then
+    spawner_probability_edge=biter_ratio_segment/(biter_ratio_segment+spitter_ratio_segment)  -- normalize to between 0 and 1
+  end
+end
+
 local function init()
   if not glob.regions then glob.regions = {} end
   prebuild_config_data()
   generate_seed()
+  calculate_spawner_ratio()
   spawn_starting_resources()
   
   if debug_enabled and not glob.debug_once then
@@ -780,7 +795,7 @@ local function clear_chunk(c_x, c_y)
   
   -- remove biters
   for _, obj in ipairs(game.findentitiesfiltered{area = {{c_x - CHUNK_SIZE/2, c_y - CHUNK_SIZE/2}, {c_x + CHUNK_SIZE/2, c_y + CHUNK_SIZE/2}}, type="unit"}) do
-    if obj.valid  and obj.force.name == "enemy"  and string.find(obj.name, "-biter", -6) then
+    if obj.valid  and obj.force.name == "enemy"  and (string.find(obj.name, "-biter", -6) or string.find(obj.name, "-spitter", -8)) then
       obj.destroy()
     end
   end

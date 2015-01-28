@@ -2,20 +2,20 @@ require 'defines'
 debug_enabled = false
 
 
-region_size=8 -- alternative mean to control how further away resources would be, default - 256 tiles or 8 chunks
+region_size=7 -- alternative mean to control how further away resources would be, default - 256 tiles or 8 chunks
               -- each region is region_size*region_size chunks
               -- each chunk is 32*32 tiles
 
-override_normal_spawn = true   -- if false then the standard spawner can also spawn full grown resources/entities, 
+override_normal_spawn = false   -- if false then the standard spawner can also spawn full grown resources/entities, 
                                -- set resources you want to control through this config to "None" in worldgen "Size" settings when starting a new game
                                -- changing of this setting requires game restart, i.e. close game and start it again, not actally a new game
                                
-override_type = 'full'   	   -- 'full' - no spawns by game are allowed, 'partially' - very small patches are spawned by world gen
+override_type = 'partially'   	   -- 'full' - no spawns by game are allowed, 'partially' - very small patches are spawned by world gen
                                -- changing of this setting requires game restart
 
 starting_area_size=1           -- starting area in regions, safe from random nonsense
 
-absolute_resource_chance=0.40  -- chance to spawn an resource in a region
+absolute_resource_chance=0.60  -- chance to spawn an resource in a region
 global_richness_mult = 1.0      -- multiply richness all resources
 
 multi_resource_richness_factor=0.60 -- any additional resource is multiplied by this value times resources-1
@@ -45,7 +45,7 @@ config={
     spawns_per_region={min=1, max=2}, --number of chunks
     richness=7000,
     
-    size={min=20, max=40}, -- rough radius of area, too high value can produce square shaped areas
+    size={min=13, max=40}, -- rough radius of area, too high value can produce square shaped areas
     
     -- resource provided at starting location
     -- probability: 1 = 100% chance to be in starting area
@@ -58,7 +58,6 @@ config={
       ['copper-ore'] = 4, 
       ["coal"] = 8,
       ["stone"] = 8,
-      ["crude-oil"] = 1,
     }
   },
   ["copper-ore"] = {
@@ -67,9 +66,9 @@ config={
     allotment=120,
     spawns_per_region={min=1, max=2},
     richness=11000,
-    size={min=15, max=30},
+    size={min=13, max=32},
 
-    starting={richness=1800, size=10, probability=1},
+    starting={richness=1800, size=13, probability=1},
     
     multi_resource_chance=0.13,
     multi_resource={
@@ -77,7 +76,6 @@ config={
       ['copper-ore'] = 2, 
       ["coal"] = 8,
       ["stone"] = 8,
-      ["crude-oil"] = 1, 
     }
   },
   ["coal"] = {
@@ -85,8 +83,8 @@ config={
 
     allotment=100,
 
-    spawns_per_region={min=1, max=3},
-    size={min=15, max=25},
+    spawns_per_region={min=1, max=2},
+    size={min=13, max=24},
     richness=14000,
 
     starting={richness=2500, size=12, probability=1},
@@ -97,7 +95,6 @@ config={
       ['copper-ore'] = 2, 
       ["coal"] = 8,
       ["stone"] = 8,
-      ["crude-oil"] = 1, 
     }
   },
   ["stone"] = {
@@ -106,7 +103,7 @@ config={
     allotment=80,
     spawns_per_region={min=1, max=2},
     richness=9000,
-    size={min=15, max=25},
+    size={min=11, max=27},
 
     starting={richness=1000, size=8, probability=1},
     
@@ -116,20 +113,18 @@ config={
       ['copper-ore'] = 2, 
       ["coal"] = 8,
       ["stone"] = 8,
-      ["crude-oil"] = 3, 
     }
   },
   
   ["crude-oil"] = {
     type="resource-liquid",
-    minimum_amount=750, 
+    minimum_amount=2000,
+    allotment=80,
+    spawns_per_region={min=1, max=3},
+    richness={min=20000, max=70000}, -- total richness of site 
+    size={min=2, max=5}, -- richness divided by this number
     
-    allotment=65,
-    spawns_per_region={min=1, max=2},
-    richness={min=20000, max=60000}, -- total richness of site 
-    size={min=2, max=4}, -- richness devided by this number
-    
-    starting={richness=4000, size=1, probability=0.5}
+    starting={richness=14000, size=2, probability=1}
   },
   
   ["biter-spawner"] = {
@@ -394,7 +389,7 @@ if remote.interfaces["DyTech-Metallurgy"] then
     allotment=25,
     spawns_per_region={min=1, max=3},
     richness={min=40000, max=120000}, -- total richness of site 
-    size={min=2, max=7}, -- richness devided by this number
+    size={min=2, max=7}, -- richness divided by this number
     
     absolute_probability=0.01,
     
@@ -459,12 +454,12 @@ if remote.interfaces["bobores"] then
     type="resource-ore",
 
     allotment=80,
-    spawns_per_region={min=2, max=5},
+    spawns_per_region={min=1, max=2},
     richness=6000,
     size={min=10, max=19},
     min_amount = 15,
 
-    starting={richness=500, size=3, probability=0.1},
+    starting={richness=500, size=3, probability=0},
     
     multi_resource_chance=0.60,
     multi_resource={
@@ -479,12 +474,12 @@ if remote.interfaces["bobores"] then
     type="resource-ore",
 
     allotment=60,
-    spawns_per_region={min=2, max=5},
+    spawns_per_region={min=1, max=2},
     richness=4000,
     size={min=8, max=10},
     min_amount = 15,
 
-    starting={richness=500, size=3, probability=0.5},
+    starting={richness=500, size=3, probability=0},
     
     multi_resource_chance=0.60,
     multi_resource={
@@ -500,7 +495,7 @@ if remote.interfaces["bobores"] then
     type="resource-ore",
 
     allotment=80,
-    spawns_per_region={min=2, max=5},
+    spawns_per_region={min=1, max=2},
     richness=5000,
     size={min=6, max=15},
     min_amount = 15,
@@ -521,7 +516,7 @@ if remote.interfaces["bobores"] then
     type="resource-ore",
 
     allotment=90,
-    spawns_per_region={min=2, max=5},
+    spawns_per_region={min=1, max=2},
     richness=5000,
     size={min=18, max=27},
     min_amount = 15,
@@ -543,7 +538,7 @@ if remote.interfaces["bobores"] then
     type="resource-ore",
 
     allotment=40,
-    spawns_per_region={min=2, max=5},
+    spawns_per_region={min=1, max=2},
     richness=2000,
     size={min=6, max=9},
     min_amount = 15,
@@ -563,7 +558,7 @@ if remote.interfaces["bobores"] then
     type="resource-ore",
 
     allotment=90,
-    spawns_per_region={min=2, max=5},
+    spawns_per_region={min=1, max=2},
     richness=4000,
     size={min=9, max=15},
     min_amount = 15,
@@ -583,7 +578,7 @@ if remote.interfaces["bobores"] then
     type="resource-ore",
 
     allotment=40,
-    spawns_per_region={min=2, max=5},
+    spawns_per_region={min=1, max=2},
     richness=2000,
     size={min=6, max=9},
     min_amount = 15,
@@ -604,12 +599,12 @@ if remote.interfaces["bobores"] then
     type="resource-ore",
 
     allotment=90,
-    spawns_per_region={min=2, max=5},
+    spawns_per_region={min=1, max=2},
     richness=5000,
     size={min=5, max=12},
     min_amount = 15,
 
-    starting={richness=500, size=4, probability=0.0},
+    starting={richness=500, size=4, probability=1},
     
     multi_resource_chance=0.0,
     multi_resource={
@@ -625,7 +620,7 @@ if remote.interfaces["bobores"] then
     type="resource-ore",
 
     allotment=60,
-    spawns_per_region={min=2, max=5},
+    spawns_per_region={min=1, max=2},
     richness=3000,
     size={min=6, max=15},
     min_amount = 15,

@@ -5,7 +5,9 @@ function is_partial()
 end
 
 function add_peak(ent, peak)
-  ent.autoplace.peaks[#ent.autoplace.peaks+1] = peak
+  if ent.autoplace then		-- peace mod sets autoplace to null for the spawners, prevent that we use it if this is the case.
+    ent.autoplace.peaks[#ent.autoplace.peaks+1] = peak
+	end
 end
 
 function change_ocataves(autoplace, octaves)

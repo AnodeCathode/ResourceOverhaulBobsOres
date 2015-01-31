@@ -638,6 +638,24 @@ if remote.interfaces["bobores"] then
   }
 end
 
+-- peace mod
+if remote.interfaces["peacemod"] then
+  config["alien-ore"] = {
+    type="resource-ore",
+    allotment=10,
+    spawns_per_region={min=0, max=1},
+    richness={min=300, max=1000},
+    size={min=5, max=10},
+		
+		starting={richness=1, size=1, probability=0},
+		
+    multi_resource_chance=0.2,
+    multi_resource={
+      ['copper-ore'] = 1,
+    }
+  }
+end  
+
 --[[ commented due to absence in current version of F-Mod
 if remote.interfaces["F-Mod"] then
   -- geyser left as is for now

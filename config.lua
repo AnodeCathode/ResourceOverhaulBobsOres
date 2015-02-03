@@ -636,6 +636,86 @@ if remote.interfaces["bobores"] then
       ["tungsten-ore"] = 3,
     }
   }
+	
+	-- check if Nickel, Cobalt, Sulfur or GemOre is added by bobs ores
+	if game and game.entityprototypes["cobalt-ore"] then
+		config["cobalt-ore"] = {
+			type="resource-ore",
+
+			allotment=30,
+			spawns_per_region={min=1, max=2},
+			richness=3000,
+			size={min=6, max=15},
+			min_amount = 15,
+
+			starting={richness=50, size=3, probability=0},
+			
+			multi_resource_chance=0.30,
+			multi_resource={
+				["lead-ore"] = 3
+			}
+		}
+	end
+	
+	if game and game.entityprototypes["nickel-ore"] then
+		config["nickel-ore"] = {
+			type="resource-ore",
+
+			allotment=25,
+			spawns_per_region={min=1, max=2},
+			richness=3000,
+			size={min=6, max=15},
+			min_amount = 15,
+
+			starting={richness=50, size=3, probability=0},
+			
+			multi_resource_chance=0.10,
+			multi_resource={
+				["tungsten-ore"] = 3
+			}
+		}
+	end
+	
+	if game and game.entityprototypes["sulfur"] then
+		config["sulfur"] = {
+			type="resource-ore",
+
+			allotment=40,
+			spawns_per_region={min=1, max=2},
+			richness=3000,
+			size={min=6, max=15},
+			min_amount = 15,
+
+			starting={richness=50, size=3, probability=0},
+			
+			multi_resource_chance=0.40,
+			multi_resource={
+				["lead-ore"] = 3,
+				["tin-ore"] = 3,
+				["tungsten-ore"] = 3,
+			}
+		}
+	end
+	
+	if game and game.entityprototypes["gem-ore"] then
+		config["gem-ore"] = {
+			type="resource-ore",
+
+			allotment=60,
+			spawns_per_region={min=1, max=2},
+			richness=3000,
+			size={min=6, max=15},
+			min_amount = 15,
+
+			starting={richness=50, size=3, probability=0},
+			
+			multi_resource_chance=0.15,
+			multi_resource={
+				["silver-ore"] = 3,
+				["gold-ore"] = 3,
+			}
+		}
+	end
 end
 
 -- peace mod

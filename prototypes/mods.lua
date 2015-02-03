@@ -2,11 +2,11 @@ require("prototype_utils")
 
 
 --Road works
-if data.raw["resource"]["RW-limestone"] then
+if data.raw["resource"]["RW_limestone"] then
   if is_partial() then
-    data.raw["resource"]["RW-limestone"].autoplace.max_probability = 0.03
+    data.raw["resource"]["RW_limestone"].autoplace.max_probability = 0.03
   else
-    add_peak(data.raw["resource"]["RW-limestone"],{influence=-1000})
+    add_peak(data.raw["resource"]["RW_limestone"],{influence=-1000})
   end
 end
 

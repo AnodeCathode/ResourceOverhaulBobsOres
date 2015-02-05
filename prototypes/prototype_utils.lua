@@ -5,7 +5,7 @@ function is_partial()
 end
 
 function add_peak(ent, peak)
-  if (ent.autoplace ~= null) then
+  if (ent.autoplace ~= nil) then
     ent.autoplace.peaks[#ent.autoplace.peaks+1] = peak
   end
 end

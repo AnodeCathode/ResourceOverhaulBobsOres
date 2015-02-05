@@ -217,7 +217,7 @@ if remote.interfaces["DyTech-Core"] then
   config["stone"].starting.richness = 10000
 end
 
-if remote.interfaces["DyTech-Metallurgy"] then
+if remote.interfaces["DyTech-Core"] then
 -- exotic ores
   config["gold-ore"] = {
     type="resource-ore",

@@ -43,7 +43,7 @@ config={
     -- general spawn params
     allotment=120, -- how common resource is
     spawns_per_region={min=1, max=2}, --number of chunks
-    richness=7000,
+    richness=10000,
 
     size={min=13, max=40}, -- rough radius of area, too high value can produce square shaped areas
 
@@ -85,7 +85,7 @@ config={
 
     spawns_per_region={min=1, max=2},
     size={min=13, max=24},
-    richness=14000,
+    richness=11000,
 
     starting={richness=2500, size=12, probability=1},
 
@@ -408,9 +408,9 @@ if game.entityprototypes["sniper"] or remote.interfaces["DyTech-Warfare"] then
   config["gems"] = {
     type="resource-ore",
 
-    allotment=50,
+    allotment=65,
     spawns_per_region={min=2, max=5},
-    richness=125,
+    richness=2000,
     size={min=2, max=5},
     min_amount = 15,
     starting={richness=40, size=3, probability=0},
@@ -455,7 +455,7 @@ if remote.interfaces["bobores"] then
 
     allotment=80,
     spawns_per_region={min=1, max=2},
-    richness=6000,
+    richness=6500,
     size={min=10, max=19},
     min_amount = 15,
 
@@ -475,7 +475,7 @@ if remote.interfaces["bobores"] then
 
     allotment=60,
     spawns_per_region={min=1, max=2},
-    richness=4000,
+    richness=6500,
     size={min=8, max=10},
     min_amount = 15,
 
@@ -496,7 +496,7 @@ if remote.interfaces["bobores"] then
 
     allotment=80,
     spawns_per_region={min=1, max=2},
-    richness=5000,
+    richness=6500,
     size={min=6, max=15},
     min_amount = 15,
 
@@ -515,9 +515,9 @@ if remote.interfaces["bobores"] then
   config["tin-ore"] = {
     type="resource-ore",
 
-    allotment=90,
+    allotment=80,
     spawns_per_region={min=1, max=2},
-    richness=5000,
+    richness=6500,
     size={min=18, max=27},
     min_amount = 15,
 
@@ -539,7 +539,7 @@ if remote.interfaces["bobores"] then
 
     allotment=40,
     spawns_per_region={min=1, max=2},
-    richness=2000,
+    richness=6500,
     size={min=6, max=9},
     min_amount = 15,
 
@@ -557,9 +557,9 @@ if remote.interfaces["bobores"] then
   config["bauxite-ore"] = {
     type="resource-ore",
 
-    allotment=90,
+    allotment=85,
     spawns_per_region={min=1, max=2},
-    richness=4000,
+    richness=6500,
     size={min=9, max=15},
     min_amount = 15,
 
@@ -579,7 +579,7 @@ if remote.interfaces["bobores"] then
 
     allotment=40,
     spawns_per_region={min=1, max=2},
-    richness=2000,
+    richness=6500,
     size={min=6, max=9},
     min_amount = 15,
 
@@ -600,7 +600,7 @@ if remote.interfaces["bobores"] then
 
     allotment=90,
     spawns_per_region={min=1, max=2},
-    richness=5000,
+    richness=6500,
     size={min=5, max=12},
     min_amount = 15,
 
@@ -621,7 +621,7 @@ if remote.interfaces["bobores"] then
 
     allotment=60,
     spawns_per_region={min=1, max=2},
-    richness=3000,
+    richness=6500,
     size={min=6, max=15},
     min_amount = 15,
 

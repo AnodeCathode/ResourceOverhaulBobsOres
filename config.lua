@@ -6,10 +6,10 @@ region_size=7 -- alternative mean to control how further away resources would be
               -- each region is region_size*region_size chunks
               -- each chunk is 32*32 tiles
 
-override_normal_spawn = false   -- if false then the standard spawner can also spawn full grown resources/entities, 
+override_normal_spawn = false   -- if false then the standard spawner can also spawn full grown resources/entities,
                                -- set resources you want to control through this config to "None" in worldgen "Size" settings when starting a new game
                                -- changing of this setting requires game restart, i.e. close game and start it again, not actally a new game
-                               
+
 override_type = 'partially'   	   -- 'full' - no spawns by game are allowed, 'partially' - very small patches are spawned by world gen
                                -- changing of this setting requires game restart
 
@@ -44,18 +44,18 @@ config={
     allotment=120, -- how common resource is
     spawns_per_region={min=1, max=2}, --number of chunks
     richness=7000,
-    
+
     size={min=13, max=40}, -- rough radius of area, too high value can produce square shaped areas
-    
+
     -- resource provided at starting location
     -- probability: 1 = 100% chance to be in starting area
     --				0 = resource is not in starting area
     starting={richness=2000, size=17, probability=1},
-    
+
     multi_resource_chance=0.13, -- absolute value
     multi_resource={
       ["iron-ore"] = 2, -- ["resource_name"] = allotment
-      ['copper-ore'] = 4, 
+      ['copper-ore'] = 4,
       ["coal"] = 8,
       ["stone"] = 8,
     }
@@ -69,11 +69,11 @@ config={
     size={min=13, max=32},
 
     starting={richness=1800, size=13, probability=1},
-    
+
     multi_resource_chance=0.13,
     multi_resource={
       ["iron-ore"] = 4,
-      ['copper-ore'] = 2, 
+      ['copper-ore'] = 2,
       ["coal"] = 8,
       ["stone"] = 8,
     }
@@ -88,11 +88,11 @@ config={
     richness=14000,
 
     starting={richness=2500, size=12, probability=1},
-    
+
     multi_resource_chance=0.13,
     multi_resource={
       ["iron-ore"] = 2,
-      ['copper-ore'] = 2, 
+      ['copper-ore'] = 2,
       ["coal"] = 8,
       ["stone"] = 8,
     }
@@ -106,43 +106,43 @@ config={
     size={min=11, max=27},
 
     starting={richness=1000, size=8, probability=1},
-    
+
     multi_resource_chance=0.13,
     multi_resource={
       ["iron-ore"] = 2,
-      ['copper-ore'] = 2, 
+      ['copper-ore'] = 2,
       ["coal"] = 8,
       ["stone"] = 8,
     }
   },
-  
+
   ["crude-oil"] = {
     type="resource-liquid",
     minimum_amount=2000,
     allotment=80,
     spawns_per_region={min=1, max=3},
-    richness={min=20000, max=70000}, -- total richness of site 
+    richness={min=20000, max=70000}, -- total richness of site
     size={min=2, max=5}, -- richness divided by this number
-    
+
     starting={richness=14000, size=2, probability=1}
   },
-  
+
   ["biter-spawner"] = {
     type="entity",
     force="enemy",
     clear_range = {3, 3},
-    
+
     spawns_per_region={min=2,max=5},
     size={min=2,max=6},
     size_per_region_factor=1.05,
     richness=1,
-    
+
     absolute_probability=0.15, -- chance to spawn in region
     probability_distance_factor=1.05, -- relative incress per region
     max_probability_distance_factor=3.0, -- absolute value
 
     along_resource_probability=0.40, -- chance to spawn in resource chunk anyway, absolute value. Can happen once per resource.
-    
+
     sub_spawn_probability=0.5,     -- chance for this entity to spawn anything from sub_spawns table, absolute value
     sub_spawn_size={min=1, max=2}, -- in same chunk
     sub_spawn_distance_factor=1.02,
@@ -184,8 +184,8 @@ end
 
 -- Roadworks mod
 if remote and game then
-if game.entityprototypes["RW-limestone"] then
-  config["RW-limestone"] = {
+if game.entityprototypes["RW_limestone"] then
+  config["RW_limestone"] = {
     type="resource-ore",
 
     allotment=85,
@@ -194,19 +194,19 @@ if game.entityprototypes["RW-limestone"] then
     size={min=10, max=17},
 
     starting={richness=1000, size=4, probability=0.9},
-    
+
     multi_resource_chance=0.15,
     multi_resource={
       ["coal"] = 2,
       ["stone"] = 8,
-      ["crude-oil"] = 1, 
+      ["crude-oil"] = 1,
     }
   }
-  
-  config["stone"].multi_resource["RW-limestone"] = 12
-  config["iron-ore"].multi_resource["RW-limestone"] = 3
-  config["copper-ore"].multi_resource["RW-limestone"] = 3
-  config["coal"].multi_resource["RW-limestone"] = 3
+
+  config["stone"].multi_resource["RW_limestone"] = 12
+  config["iron-ore"].multi_resource["RW_limestone"] = 3
+  config["copper-ore"].multi_resource["RW_limestone"] = 3
+  config["coal"].multi_resource["RW_limestone"] = 3
 end
 
 -- DyTech
@@ -217,7 +217,7 @@ if remote.interfaces["DyTech-Core"] then
   config["stone"].starting.richness = 10000
 end
 
-if remote.interfaces["DyTech-Metallurgy"] then
+if remote.interfaces["DyTech-Core"] or remote.interfaces["DyTech-Metallurgy"] then
 -- exotic ores
   config["gold-ore"] = {
     type="resource-ore",
@@ -229,7 +229,7 @@ if remote.interfaces["DyTech-Metallurgy"] then
     min_amount = 15,
 
     starting={richness=50, size=3, probability=0},
-    
+
     multi_resource_chance=0.60,
     multi_resource={
       ["lead-ore"] = 3,
@@ -238,7 +238,7 @@ if remote.interfaces["DyTech-Metallurgy"] then
       ["tungsten-ore"] = 3,
       ["zinc-ore"] = 3,
     }
-  } 
+  }
   config["silver-ore"] = {
     type="resource-ore",
 
@@ -249,7 +249,7 @@ if remote.interfaces["DyTech-Metallurgy"] then
     min_amount = 15,
 
     starting={richness=50, size=3, probability=0},
-    
+
     multi_resource_chance=0.60,
     multi_resource={
       ["lead-ore"] = 3,
@@ -259,7 +259,7 @@ if remote.interfaces["DyTech-Metallurgy"] then
       ["zinc-ore"] = 3,
     }
   }
-  
+
   config["lead-ore"] = {
     type="resource-ore",
 
@@ -270,7 +270,7 @@ if remote.interfaces["DyTech-Metallurgy"] then
     min_amount = 15,
 
     starting={richness=50, size=3, probability=0.2},
-    
+
     multi_resource_chance=0.60,
     multi_resource={
       ["silver-ore"] = 3,
@@ -280,7 +280,7 @@ if remote.interfaces["DyTech-Metallurgy"] then
       ["zinc-ore"] = 3,
     }
   }
-  
+
   config["tin-ore"] = {
     type="resource-ore",
 
@@ -291,7 +291,7 @@ if remote.interfaces["DyTech-Metallurgy"] then
     min_amount = 15,
 
     starting={richness=50, size=3, probability=0},
-    
+
     multi_resource_chance=0.60,
     multi_resource={
       ["lead-ore"] = 3,
@@ -302,7 +302,7 @@ if remote.interfaces["DyTech-Metallurgy"] then
       ["copper-ore"] = 2,
     }
   }
-  
+
   config["tungsten-ore"] = {
     type="resource-ore",
 
@@ -313,7 +313,7 @@ if remote.interfaces["DyTech-Metallurgy"] then
     min_amount = 15,
 
     starting={richness=50, size=3, probability=0},
-    
+
     multi_resource_chance=0.60,
     multi_resource={
       ["lead-ore"] = 3,
@@ -323,7 +323,7 @@ if remote.interfaces["DyTech-Metallurgy"] then
       ["zinc-ore"] = 3,
     }
   }
-  
+
   config["zinc-ore"] = {
     type="resource-ore",
 
@@ -334,7 +334,7 @@ if remote.interfaces["DyTech-Metallurgy"] then
     min_amount = 15,
 
     starting={richness=50, size=3, probability=0},
-    
+
     multi_resource_chance=0.60,
     multi_resource={
       ["lead-ore"] = 3,
@@ -344,55 +344,55 @@ if remote.interfaces["DyTech-Metallurgy"] then
       ["tungsten-ore"] = 3,
     }
   }
-  
+
 -- moltensomethin
   config["lava-2800"] = {
     type="resource-liquid",
-    minimum_amount=1000, 
-    
+    minimum_amount=1000,
+
     allotment=17,
     spawns_per_region={min=1, max=3},
     richness={min=40000, max=120000},
     size={min=2, max=7},
-    
+
     absolute_probability=0.01,
-    
+
     multi_resource_chance=0.25,
     multi_resource={
       ["lava-2800"] = 1,
       ["lava-1400"] = 2,
       ["lava-600"] = 4
     }
-  } 
+  }
   config["lava-1400"] = {
     type="resource-liquid",
-    minimum_amount=1000, 
-    
+    minimum_amount=1000,
+
     allotment=22,
     spawns_per_region={min=1, max=3},
     richness={min=40000, max=120000},
     size={min=2, max=7},
-    
+
     absolute_probability=0.01,
-    
+
     multi_resource_chance=0.25,
     multi_resource={
       ["lava-2800"] = 1,
       ["lava-1400"] = 2,
       ["lava-600"] = 4
     }
-  } 
+  }
   config["lava-600"] = {
     type="resource-liquid",
-    minimum_amount=1000, 
-    
+    minimum_amount=1000,
+
     allotment=25,
     spawns_per_region={min=1, max=3},
-    richness={min=40000, max=120000}, -- total richness of site 
+    richness={min=40000, max=120000}, -- total richness of site
     size={min=2, max=7}, -- richness divided by this number
-    
+
     absolute_probability=0.01,
-    
+
     starting={richness=10500, size=3, probability=0.4},
     multi_resource_chance=0.25,
     multi_resource={
@@ -401,10 +401,10 @@ if remote.interfaces["DyTech-Metallurgy"] then
       ["lava-600"] = 4
     }
   }
-  
+
 end
 
-if remote.interfaces["DyTech-Warfare"] then
+if game.entityprototypes["sniper"] or remote.interfaces["DyTech-Warfare"] then
   config["gems"] = {
     type="resource-ore",
 
@@ -414,13 +414,13 @@ if remote.interfaces["DyTech-Warfare"] then
     size={min=2, max=5},
     min_amount = 15,
     starting={richness=40, size=3, probability=0},
-    
+
     multi_resource_chance=0.20,
     multi_resource={
       ["stone"] = 1
     }
   }
-  
+
   if config["zinc"] then
     config["gems"].multi_resource["lead-ore"] = 3
     config["gems"].multi_resource["silver-ore"] = 3
@@ -429,7 +429,7 @@ if remote.interfaces["DyTech-Warfare"] then
     config["gems"].multi_resource["tungsten-ore"] = 3
     config["gems"].multi_resource["zinc-ore"] = 3
     config["gems"].multi_resource_chance = 0.50
-    
+
     config["lead-ore"].multi_resource["gems"] = 2
     config["silver-ore"].multi_resource["gems"] = 2
     config["gold-ore"].multi_resource["gems"] = 2
@@ -437,7 +437,7 @@ if remote.interfaces["DyTech-Warfare"] then
     config["tungsten-ore"].multi_resource["gems"] = 2
     config["zinc-ore"].multi_resource["gems"] = 2
   end
-  
+
 end
 
 -- BobOres
@@ -460,7 +460,7 @@ if remote.interfaces["bobores"] then
     min_amount = 15,
 
     starting={richness=500, size=3, probability=0},
-    
+
     multi_resource_chance=0.60,
     multi_resource={
       ["lead-ore"] = 3,
@@ -469,7 +469,7 @@ if remote.interfaces["bobores"] then
       ["tungsten-ore"] = 3,
       ["zinc-ore"] = 3,
     }
-  } 
+  }
   config["silver-ore"] = {
     type="resource-ore",
 
@@ -480,7 +480,7 @@ if remote.interfaces["bobores"] then
     min_amount = 15,
 
     starting={richness=500, size=3, probability=0},
-    
+
     multi_resource_chance=0.60,
     multi_resource={
       ["lead-ore"] = 3,
@@ -490,7 +490,7 @@ if remote.interfaces["bobores"] then
       ["zinc-ore"] = 3,
     }
   }
-  
+
   config["lead-ore"] = {
     type="resource-ore",
 
@@ -501,7 +501,7 @@ if remote.interfaces["bobores"] then
     min_amount = 15,
 
     starting={richness=500, size=6, probability=1},
-    
+
     multi_resource_chance=0.60,
     multi_resource={
       ["silver-ore"] = 3,
@@ -511,7 +511,7 @@ if remote.interfaces["bobores"] then
       ["zinc-ore"] = 3,
     }
   }
-  
+
   config["tin-ore"] = {
     type="resource-ore",
 
@@ -522,7 +522,7 @@ if remote.interfaces["bobores"] then
     min_amount = 15,
 
     starting={richness=1000, size=6, probability=1},
-    
+
     multi_resource_chance=0.60,
     multi_resource={
       ["lead-ore"] = 3,
@@ -533,7 +533,7 @@ if remote.interfaces["bobores"] then
       ["copper-ore"] = 2,
     }
   }
-  
+
   config["tungsten-ore"] = {
     type="resource-ore",
 
@@ -544,7 +544,7 @@ if remote.interfaces["bobores"] then
     min_amount = 15,
 
     starting={richness=50, size=3, probability=0},
-    
+
     multi_resource_chance=0.60,
     multi_resource={
       ["lead-ore"] = 3,
@@ -564,7 +564,7 @@ if remote.interfaces["bobores"] then
     min_amount = 15,
 
     starting={richness=50, size=3, probability=0},
-    
+
     multi_resource_chance=0.0,
     multi_resource={
       ["lead-ore"] = 3,
@@ -584,7 +584,7 @@ if remote.interfaces["bobores"] then
     min_amount = 15,
 
     starting={richness=50, size=3, probability=0},
-    
+
     multi_resource_chance=0.0,
     multi_resource={
       ["lead-ore"] = 3,
@@ -594,7 +594,7 @@ if remote.interfaces["bobores"] then
       ["zinc-ore"] = 3,
     }
   }
-  
+
   config["quartz"] = {
     type="resource-ore",
 
@@ -605,7 +605,7 @@ if remote.interfaces["bobores"] then
     min_amount = 15,
 
     starting={richness=500, size=4, probability=1},
-    
+
     multi_resource_chance=0.0,
     multi_resource={
       ["lead-ore"] = 3,
@@ -615,7 +615,7 @@ if remote.interfaces["bobores"] then
       ["zinc-ore"] = 3,
     }
   }
-  
+
   config["zinc-ore"] = {
     type="resource-ore",
 
@@ -626,7 +626,7 @@ if remote.interfaces["bobores"] then
     min_amount = 15,
 
     starting={richness=50, size=3, probability=0},
-    
+
     multi_resource_chance=0.60,
     multi_resource={
       ["lead-ore"] = 3,
@@ -741,11 +741,11 @@ if remote.interfaces["F-Mod"] then
   -- geyser left as is for now
   config["geyser"] = {
     type="resource-liquid",
-    minimum_amount=750000000, 
-    
+    minimum_amount=750000000,
+
     allotment=0,
     spawns_per_region={min=1, max=2},
-    richness={min=7500000000, max=7500000000}, -- total richness of site 
+    richness={min=7500000000, max=7500000000}, -- total richness of site
     size={min=1, max=2}, -- richness devided by this number
   }
   if config["lava-600"] then

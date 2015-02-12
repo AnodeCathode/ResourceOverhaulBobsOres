@@ -404,7 +404,7 @@ if remote.interfaces["DyTech-Core"] or remote.interfaces["DyTech-Metallurgy"] th
 
 end
 
-if remote.interfaces["MAIN-DyTech-War"] or remote.interfaces["DyTech-Warfare"] then
+if game.entityprototypes["sniper"] or remote.interfaces["DyTech-Warfare"] then
   config["gems"] = {
     type="resource-ore",
 

@@ -10,7 +10,7 @@ override_normal_spawn = false   -- if false then the standard spawner can also s
                                -- set resources you want to control through this config to "None" in worldgen "Size" settings when starting a new game
                                -- changing of this setting requires game restart, i.e. close game and start it again, not actally a new game
 
-override_type = 'partially'   	   -- 'full' - no spawns by game are allowed, 'partially' - very small patches are spawned by world gen
+override_type = 'partially'        -- 'full' - no spawns by game are allowed, 'partially' - very small patches are spawned by world gen
                                -- changing of this setting requires game restart
 
 starting_area_size=1           -- starting area in regions, safe from random nonsense
@@ -31,7 +31,7 @@ deterministic = true           -- set to false to use system for all decisions  
 endless_resource_mode = false   -- if true, the size of each resource is modified by the following modifier. Use with the endless resources mod.
 endless_resource_mode_sizeModifier = 0.30
 
-disable_RSO_biter_spawning = false		-- if true, no biters will be spawned by RSO. Do not use with override_normal_spawn = true, because then no biters will be spawned at all.
+disable_RSO_biter_spawning = false    -- if true, no biters will be spawned by RSO. Do not use with override_normal_spawn = true, because then no biters will be spawned at all.
 
 biter_ratio_segment=1      --the ratio components determining how many biters to spitters will be spawned
 spitter_ratio_segment=1    --eg. 1 and 1 -> equal number of biters and spitters,  10 and 1 -> 10 times as many biters to spitters
@@ -49,7 +49,7 @@ config={
 
     -- resource provided at starting location
     -- probability: 1 = 100% chance to be in starting area
-    --				0 = resource is not in starting area
+    --        0 = resource is not in starting area
     starting={richness=2000, size=17, probability=1},
 
     multi_resource_chance=0.13, -- absolute value
@@ -175,10 +175,10 @@ config={
 -- reduce the starting area size of resources (Note: only done for vanilla resources)
 -- The size will additionally be modified with endless_resource_mode_sizeModifier
 if endless_resource_mode then
-	config["iron-ore"].starting = {richness=2000, size=22, probability=1}
-	config["copper-ore"].starting = {richness=1800, size=20, probability=1}
-	config["coal"].starting = {richness=2500, size=15, probability=1}
-	config["stone"].starting = {richness=1000, size=10, probability=1}
+  config["iron-ore"].starting = {richness=2000, size=22, probability=1}
+  config["copper-ore"].starting = {richness=1800, size=20, probability=1}
+  config["coal"].starting = {richness=2500, size=15, probability=1}
+  config["stone"].starting = {richness=1000, size=10, probability=1}
 end
 
 
@@ -636,86 +636,86 @@ if remote.interfaces["bobores"] then
       ["tungsten-ore"] = 3,
     }
   }
-	
-	-- check if Nickel, Cobalt, Sulfur or GemOre is added by bobs ores
-	if game and game.entityprototypes["cobalt-ore"] then
-		config["cobalt-ore"] = {
-			type="resource-ore",
+  
+  -- check if Nickel, Cobalt, Sulfur or GemOre is added by bobs ores
+  if game and game.entityprototypes["cobalt-ore"] then
+    config["cobalt-ore"] = {
+      type="resource-ore",
 
-			allotment=30,
-			spawns_per_region={min=1, max=2},
-			richness=3000,
-			size={min=6, max=15},
-			min_amount = 15,
+      allotment=30,
+      spawns_per_region={min=1, max=2},
+      richness=3000,
+      size={min=6, max=15},
+      min_amount = 15,
 
-			starting={richness=50, size=3, probability=0},
-			
-			multi_resource_chance=0.30,
-			multi_resource={
-				["lead-ore"] = 3
-			}
-		}
-	end
-	
-	if game and game.entityprototypes["nickel-ore"] then
-		config["nickel-ore"] = {
-			type="resource-ore",
+      starting={richness=50, size=3, probability=0},
+      
+      multi_resource_chance=0.30,
+      multi_resource={
+        ["lead-ore"] = 3
+      }
+    }
+  end
+  
+  if game and game.entityprototypes["nickel-ore"] then
+    config["nickel-ore"] = {
+      type="resource-ore",
 
-			allotment=25,
-			spawns_per_region={min=1, max=2},
-			richness=3000,
-			size={min=6, max=15},
-			min_amount = 15,
+      allotment=25,
+      spawns_per_region={min=1, max=2},
+      richness=3000,
+      size={min=6, max=15},
+      min_amount = 15,
 
-			starting={richness=50, size=3, probability=0},
-			
-			multi_resource_chance=0.10,
-			multi_resource={
-				["tungsten-ore"] = 3
-			}
-		}
-	end
-	
-	if game and game.entityprototypes["sulfur"] then
-		config["sulfur"] = {
-			type="resource-ore",
+      starting={richness=50, size=3, probability=0},
+      
+      multi_resource_chance=0.10,
+      multi_resource={
+        ["tungsten-ore"] = 3
+      }
+    }
+  end
+  
+  if game and game.entityprototypes["sulfur"] then
+    config["sulfur"] = {
+      type="resource-ore",
 
-			allotment=40,
-			spawns_per_region={min=1, max=2},
-			richness=3000,
-			size={min=6, max=15},
-			min_amount = 15,
+      allotment=40,
+      spawns_per_region={min=1, max=2},
+      richness=3000,
+      size={min=6, max=15},
+      min_amount = 15,
 
-			starting={richness=50, size=3, probability=0},
-			
-			multi_resource_chance=0.40,
-			multi_resource={
-				["lead-ore"] = 3,
-				["tin-ore"] = 3,
-				["tungsten-ore"] = 3,
-			}
-		}
-	end
-	
-	if game and game.entityprototypes["gem-ore"] then
-		config["gem-ore"] = {
-			type="resource-ore",
+      starting={richness=50, size=3, probability=0},
+      
+      multi_resource_chance=0.40,
+      multi_resource={
+        ["lead-ore"] = 3,
+        ["tin-ore"] = 3,
+        ["tungsten-ore"] = 3,
+      }
+    }
+  end
+  
+  if game and game.entityprototypes["gem-ore"] then
+    config["gem-ore"] = {
+      type="resource-ore",
 
-			allotment=60,
-			spawns_per_region={min=1, max=2},
-			richness=3000,
-			size={min=6, max=15},
-			min_amount = 15,
+      allotment=60,
+      spawns_per_region={min=1, max=2},
+      richness=3000,
+      size={min=6, max=15},
+      min_amount = 15,
 
-			starting={richness=50, size=3, probability=0},
-			
-			multi_resource_chance=0.15,
-			multi_resource={
-				["silver-ore"] = 3,
-				["gold-ore"] = 3,
-			}
-		}
-	end
+      starting={richness=50, size=3, probability=0},
+      
+      multi_resource_chance=0.15,
+      multi_resource={
+        ["silver-ore"] = 3,
+        ["gold-ore"] = 3,
+      }
+    }
+  end
 end
 
 -- peace mod
@@ -726,9 +726,9 @@ if remote.interfaces["peacemod"] then
     spawns_per_region={min=0, max=1},
     richness={min=300, max=1000},
     size={min=5, max=10},
-		
-		starting={richness=1, size=1, probability=0},
-		
+    
+    starting={richness=1, size=1, probability=0},
+    
     multi_resource_chance=0.2,
     multi_resource={
       ['copper-ore'] = 1,

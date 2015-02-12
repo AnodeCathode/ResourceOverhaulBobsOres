@@ -184,8 +184,8 @@ end
 
 -- Roadworks mod
 if remote and game then
-if game.entityprototypes["RW-limestone"] then
-  config["RW-limestone"] = {
+if game.entityprototypes["RW_limestone"] then
+  config["RW_limestone"] = {
     type="resource-ore",
 
     allotment=85,
@@ -203,10 +203,10 @@ if game.entityprototypes["RW-limestone"] then
     }
   }
   
-  config["stone"].multi_resource["RW-limestone"] = 12
-  config["iron-ore"].multi_resource["RW-limestone"] = 3
-  config["copper-ore"].multi_resource["RW-limestone"] = 3
-  config["coal"].multi_resource["RW-limestone"] = 3
+  config["stone"].multi_resource["RW_limestone"] = 12
+  config["iron-ore"].multi_resource["RW_limestone"] = 3
+  config["copper-ore"].multi_resource["RW_limestone"] = 3
+  config["coal"].multi_resource["RW_limestone"] = 3
 end
 
 -- DyTech

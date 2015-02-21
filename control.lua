@@ -30,7 +30,7 @@ local REGION_TILE_SIZE = CHUNK_SIZE*region_size
 local MIN_BALL_DISTANCE = CHUNK_SIZE/6
 local P_BALL_SIZE_FACTOR = 0.7
 local N_BALL_SIZE_FACTOR = 0.95
-local NEGATIVE_MODIFICATOR = 123456 
+local NEGATIVE_MODIFICATOR = 123456
 local meta_shapes = {MB.MetaEllipse, MB.MetaSquare}
 
 -- local globals
@@ -96,7 +96,7 @@ local function rng_restricted_angle(restrictions)
   if restrictions=='xy' then
     y_scale=1.0 - deform*0.5
     x_scale=1.0 + deform*0.5
-    angle = rng*pi*2  
+    angle = rng*pi*2
   elseif restrictions=='x' then
     y_scale=1.0 - deform*0.6
     x_scale=1.0 + deform*0.6
@@ -146,7 +146,7 @@ local function find_intersection(x, y)
   elseif gt(x - CHUNK_SIZE*2, y + CHUNK_SIZE*2).valid and gt(x - CHUNK_SIZE*2, y).valid and gt(x, y + CHUNK_SIZE*2).valid then
     x=x - CHUNK_SIZE/2
     y=y + CHUNK_SIZE/2
-    restriction = 'xy'    
+    restriction = 'xy'
   elseif gt(x - CHUNK_SIZE*2, y - CHUNK_SIZE*2).valid and gt(x - CHUNK_SIZE*2, y).valid and gt(x, y - CHUNK_SIZE*2).valid then
     x=x - CHUNK_SIZE/2
     y=y - CHUNK_SIZE/2
@@ -182,7 +182,7 @@ local function is_same_region(c_x1, c_y1, c_x2, c_y2)
   if not floor(c_y1/REGION_TILE_SIZE) == floor(c_y2/REGION_TILE_SIZE) then
     return false
   end
-  return true
+  return false
 end
 
 local function find_random_neighbour_chunk(ocx, ocy)
@@ -210,14 +210,14 @@ local function find_random_neighbour_chunk(ocx, ocy)
   if is_same_region(ocx, ncy, ocx, ocy) then
     return ocx, ncy
   end
-  
+
   return ocx, ocy
 end
 
 -- modifies the resource size - only used in endless_resource_mode
 local function modify_resource_size(resourceSize)
 	if not endless_resource_mode then return resourceSize end
-	
+
 	newResourceSize = resourceSize * endless_resource_mode_sizeModifier
 
 	-- make sure it's still an integer
@@ -289,7 +289,7 @@ local function spawn_resource_ore(rname, pos, size, richness, restrictions)
       n_force = n_force + ball:force(x,y)
     end
     return (1 - 1/p_force) - n_force
-  end  
+  end
 
   local max_p_balls = 2
   local min_amount = assoc_config[rname].min_amount or min_amount
@@ -389,11 +389,11 @@ local function spawn_resource_liquid(rname, pos, size, richness, restrictions)
     total_share = new_share + total_share
     if new_share < avg_share/10 then
       -- too small
-      break 
+      break
     end
     local amount = floor(richness*new_share) + saved
-    --if amount >= game.entityprototypes[rname].minimum then 
-    if amount >= assoc_config[rname].minimum_amount then 
+    --if amount >= game.entityprototypes[rname].minimum then
+    if amount >= assoc_config[rname].minimum_amount then
       saved = 0
       for try=1,5 do
         local dist = rgen:random()*(max_radius - max_radius*0.1)
@@ -433,8 +433,8 @@ local function spawn_entity(ent, r_config, x, y)
   local size=rgen:random(r_config.size.min, r_config.size.max)
 
   local _total = 0
-  local r_distance = distance({x=0,y=0},{x=x/REGION_TILE_SIZE,y=x/REGION_TILE_SIZE})  
-  
+  local r_distance = distance({x=0,y=0},{x=x/REGION_TILE_SIZE,y=x/REGION_TILE_SIZE})
+
   if r_config.size_per_region_factor then
     size = size*math.min(r_config.size_per_region_factor^r_distance, 5)
   end
@@ -444,10 +444,10 @@ local function spawn_entity(ent, r_config, x, y)
     local max_d = floor(CHUNK_SIZE*1.3)
     local s_x = x + rgen:random(0, floor(max_d - r_config.clear_range[1])) - max_d/2 + r_config.clear_range[1]
     local s_y = y + rgen:random(0, floor(max_d - r_config.clear_range[2])) - max_d/2 + r_config.clear_range[2]
-              
+
     remove_trees(s_x, s_y, r_config.clear_range[1], r_config.clear_range[2])
     f=game.forces.enemy
-    
+
     if game.gettile(s_x, s_y).valid and game.canplaceentity{name=ent, position={s_x, s_y}} then
       _total = _total + richness
       debug("@ "..s_x..","..s_y)
@@ -475,7 +475,7 @@ local function spawn_entity(ent, r_config, x, y)
               allotment_max = allotment_max + allotment
             else
               v.allotment_range = nil
-            end 
+            end
           end
           local sub_type = rgen:random(0, allotment_max)
           for sub_spawn,v in pairs(r_config.sub_spawns) do
@@ -505,7 +505,7 @@ local function spawn_starting_resources()
   rgen = rng_for_reg_pos({x=0,y=0})
   local status = true
   for index,v in pairs(config) do
-    if v.starting then 
+    if v.starting then
       local prob = rgen:random() -- probability that this resource is spawned
       debug("starting resource probability rolled "..prob)
       if v.starting.probability > 0 and prob <= v.starting.probability then
@@ -555,7 +555,7 @@ local function prebuild_config_data()
     end
   end
   table.sort(config, function(a, b) return a.name < b.name end)
-  
+
   local pr=0
   for index,v in pairs(config) do
     if v.along_resource_probability then
@@ -599,7 +599,7 @@ local function init()
   generate_seed()
   calculate_spawner_ratio()
   spawn_starting_resources()
-  
+
   if debug_enabled and not glob.debug_once then
     --game.player.character.insert{name = "coal", count = 1000}
     --game.player.character.insert{name = "car", count = 1}
@@ -671,7 +671,7 @@ local function roll_region(c_x, c_y)
             deep = deep + 1
             local max_allotment = 0
             for index,sub_res in pairs(v.multi_resource) do max_allotment=max_allotment+sub_res.allotment end
-            
+
             local res_type=rgen:random(1, max_allotment)
             local min=0
             for _, sub_res in pairs(v.multi_resource) do
@@ -690,17 +690,17 @@ local function roll_region(c_x, c_y)
           break
         end
       end
-    
+
     end
 
-    -- roll for absolute_probability 
-    
+    -- roll for absolute_probability
+
     for index,v in pairs(config) do
       if v.absolute_probability then
-        local prob_factor = 1 
-        if v.probability_distance_factor then 
+        local prob_factor = 1
+        if v.probability_distance_factor then
           prob_factor = math.min(v.max_probability_distance_factor, v.probability_distance_factor^distance({x=0,y=0},{x=r_x,y=r_y}))
-        end 
+        end
         local abs_roll = rgen:random()
         if abs_roll<v.absolute_probability*prob_factor then
           local num_spawns=rgen:random(v.spawns_per_region.min, v.spawns_per_region.max)
@@ -737,7 +737,7 @@ local function roll_chunk(c_x, c_y)
   end
   if r_data[c_x] and r_data[c_x][c_y] then
     rgen = rng_for_reg_pos{x=c_center_x,y=c_center_y}
-    
+
     debug("Stumbled upon "..c_x..","..c_y.." reg: "..r_x.."."..r_y)
     local resource_list = r_data[c_x][c_y]
     --for resource, deep in pairs(r_data[c_x][c_y]) do
@@ -783,7 +783,7 @@ local function clear_chunk(c_x, c_y)
       end
     end
   end
-  
+
   for ent, _ in pairs(ent_list) do
     for _, obj in ipairs(game.findentitiesfiltered{area = {{c_x - CHUNK_SIZE/2, c_y - CHUNK_SIZE/2}, {c_x + CHUNK_SIZE/2, c_y + CHUNK_SIZE/2}}, name=ent}) do
       if obj.valid then
@@ -792,14 +792,14 @@ local function clear_chunk(c_x, c_y)
       end
     end
   end
-  
+
   -- remove biters
   for _, obj in ipairs(game.findentitiesfiltered{area = {{c_x - CHUNK_SIZE/2, c_y - CHUNK_SIZE/2}, {c_x + CHUNK_SIZE/2, c_y + CHUNK_SIZE/2}}, type="unit"}) do
     if obj.valid  and obj.force.name == "enemy"  and (string.find(obj.name, "-biter", -6) or string.find(obj.name, "-spitter", -8)) then
       obj.destroy()
     end
   end
-  
+
   if _count > 0 then debug("Destroyed - ".._count) end
 end
 
@@ -807,10 +807,10 @@ local function regenerate_everything()
   -- step 1: clear the map and mark chunks for in place generation
   glob.regions = {}
   local valid_chunks = {}
-  local i = 1 
+  local i = 1
   local status = true
   local iter_y_start, iter_y_end, iter_y_step, iter_x_start, iter_x_end, iter_x_step
-  local function set_iterators(case) 
+  local function set_iterators(case)
     if case == 1 then
       -- top_left -> bottom_left
       iter_y_start = i
@@ -845,7 +845,7 @@ local function regenerate_everything()
       iter_x_step = 1
     end
   end
-  
+
   while status do
     status = false
     for case=1,4 do
@@ -872,7 +872,7 @@ local function regenerate_everything()
     end
     i = i + 1
   end
-  
+
   -- step 2: regenerate chunks again
   i = 1
   for k, v in pairs(assoc_config) do
@@ -909,7 +909,7 @@ end
 game.onevent(defines.events.onchunkgenerated, function(event)
   local c_x = event.area.lefttop.x
   local c_y = event.area.lefttop.y
-  
+
   roll_region(c_x, c_y)
   roll_chunk(c_x, c_y)
 end)
